@@ -1,9 +1,7 @@
 { pkgs ? import <nixpkgs> { } }:
 
-with pkgs;
-
-mkShell rec {
-  nativeBuildInputs = [
+pkgs.mkShell {
+  nativeBuildInputs = with pkgs; [
     pkg-config
   ];
   buildInputs = with pkgs; [
@@ -35,7 +33,7 @@ mkShell rec {
     libxkbcommon
     wayland
   ];
-  RUST_SRC_PATH = rustPlatform.rustLibSrc;
+  RUST_SRC_PATH = pkgs.rustPlatform.rustLibSrc;
 
   shellHook = ''
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath [
